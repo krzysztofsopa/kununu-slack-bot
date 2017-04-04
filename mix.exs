@@ -15,7 +15,7 @@ defmodule KununuSlackBot.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
-    [extra_applications: [:logger, :slack],
+    [extra_applications: [:logger, :slack, :httpoison, :json],
      mod: {KununuSlackBot.Application, []}]
   end
 
@@ -29,6 +29,8 @@ defmodule KununuSlackBot.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:slack, "~> 0.11.0"}]
+    [{:slack, "~> 0.11.0"},
+    {:httpoison, "~> 0.11.0"},
+    {:json, "~> 1.0"}]
   end
 end

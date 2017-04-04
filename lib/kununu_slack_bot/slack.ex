@@ -7,7 +7,13 @@ defmodule KununuSlackBot.Slack do
   end
 
   def handle_event(message = %{type: "message"}, slack, state) do
-    send_message("I got a message!", message.channel, slack)
+    {:ok, response} = HTTPoison.get("https://www.kununu.com/at/partner/KlM=/json", [], [ ssl: [{:versions, [:'tlsv1.2']}] ])
+    {status, o} = JSON.decode(response.body)
+    points = o["all"]["points"]
+
+    IO.inspect points
+
+    send_message("test", message.channel, slack)
     {:ok, state}
   end
   def handle_event(_, _, state), do: {:ok, state}
