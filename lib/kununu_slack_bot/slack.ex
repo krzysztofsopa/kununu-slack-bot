@@ -17,8 +17,11 @@ defmodule KununuSlackBot.Slack do
     
     Logger.info "Sending info about KlM= #{inspect(points)}"
 
-    send_message("I got a message!", message.channel, slack)
+    send_message("Kununu score: #{points}", message.channel, slack)
 
+    {:ok, state}
+  end
+  def handle_event(_, _, state) do
     {:ok, state}
   end
 
