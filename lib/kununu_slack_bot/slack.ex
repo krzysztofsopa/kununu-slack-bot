@@ -4,6 +4,14 @@ defmodule KununuSlackBot.Slack do
 
   def handle_connect(slack, state) do
     Logger.info "Connected as #{slack.me.name}!"
+
+    names = Slack.Web.Users.list()
+    |> Map.get("members")
+    |> Enum.map(fn(member) ->
+      member["real_name"]
+    end)
+
+    Logger.info "#{inspect(names)}"
     
     {:ok, state}
   end
@@ -28,7 +36,7 @@ defmodule KununuSlackBot.Slack do
   def handle_info({:message, text, channel}, slack, state) do
     Logger.info "Sending your message to #{channel}!"
 
-    send_message(text, channel, slack)
+    #send_message(text, channel, slack)
 
     {:ok, state}
   end
