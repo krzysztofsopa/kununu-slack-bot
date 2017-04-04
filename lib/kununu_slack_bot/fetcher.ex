@@ -1,23 +1,15 @@
 defmodule KununuSlackBot.Fetcher do
-  use Application
-
   def info(companyName) do
-    apiSearchUrl = Application.get_env(:fetcher, KununuSlackBot)[:api_search_url]
+    apiSearchUrl = "https://api.kununu.com/v1/search/profiles?q="
     profiles =  getProfiles("#{apiSearchUrl}#{companyName}")
+    profile = hd(profiles)
 
-    messages = []
-    for profile <- profiles do
-      response = "Profile name: #{profile["name"]}, Review count: #{profile["review_count"]["online"]}, Product: #{profile["product"]}"
-      messages ++ response
-    end
-
-    IO.insepect Enum.join(messages, " ")
+    "Profile name: #{profile["name"]}, Review count: #{profile["review_count"]["online"]}, Product: #{profile["product"]}"
   end
 
   defp getProfiles(url) do
     {:ok, response} = HTTPoison.get(url, [], [ ssl: [{:versions, [:'tlsv1.2']}] ])
     {status, o} = JSON.decode(response.body)
-    total_count = o["total_count"]
 
     o["profiles"]
   end
