@@ -3,7 +3,7 @@ defmodule KununuSlackBot.Slack do
   require Logger
 
   def handle_connect(slack, state) do
-    IO.puts "Connected as #{slack.me.name}"
+    Logger.info "Connected as #{slack.me.name}!"
     
     {:ok, state}
   end
@@ -20,7 +20,7 @@ defmodule KununuSlackBot.Slack do
   end
 
   def handle_info({:message, text, channel}, slack, state) do
-    IO.puts "Sending your message, captain!"
+    Logger.info "Sending your message to #{channel}!"
 
     send_message(text, channel, slack)
 

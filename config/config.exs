@@ -22,7 +22,7 @@ use Mix.Config
 #
 
 config :logger,
-    backends: [{LoggerFileBackend, :bot_log}]
+    backends: [:console, {LoggerFileBackend, :bot_log}]
 
 config :logger, :bot_log,
     path: "logs/bot.log", level: :debug
