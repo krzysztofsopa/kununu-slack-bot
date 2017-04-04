@@ -3,17 +3,19 @@ defmodule KununuSlackBot.Slack do
   require Logger
 
   def get_user_info(user_id) do
-    cond do
-      %{"ok" => true, "user" => user} = Slack.Web.Users.info(user_id) ->
+    case Slack.Web.Users.info(user_id) do
+      %{"ok" => true, "user" => user} ->
         {:ok, user}
+      %{"ok" => false, "error" => error} ->
+        raise error
+      _ ->
+        raise "wtf"
     end
   end
 
   def get_user_name(user_id) do
-    cond do
-      {:ok, user} = get_user_info(user_id) ->
-        {:ok, user["name"]}
-    end
+    {:ok, user} = get_user_info(user_id)
+    {:ok, user["name"]}
   end
 
   def handle_connect(slack, state) do
