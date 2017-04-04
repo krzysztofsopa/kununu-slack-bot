@@ -11,6 +11,8 @@ defmodule KununuSlackBot.Slack do
     {status, o} = JSON.decode(response.body)
     points = o["all"]["points"]
 
+    KununuSlackBot.Fetcher.info()
+
     IO.inspect points
 
     send_message("test", message.channel, slack)
