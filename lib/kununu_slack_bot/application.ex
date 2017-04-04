@@ -7,13 +7,11 @@ defmodule KununuSlackBot.Application do
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
-
-    slack_token = Application.get_env(:slack, KununuSlackBot)[:api_token]
-
+    
     # Define workers and child supervisors to be supervised
     children = [
       # Starts a worker by calling: KununuSlackBot.Worker.start_link(arg1, arg2, arg3)
-      worker(Slack.Bot, [KununuSlackBot.Slack, [], slack_token]),
+      worker(Slack.Bot, [KununuSlackBot.Slack, [], Application.get_env(:slack, :api_token)]),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
